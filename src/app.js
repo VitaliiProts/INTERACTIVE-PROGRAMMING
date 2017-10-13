@@ -49,7 +49,22 @@ $("h1").click(clickHandler);
 
 // Событие mousemove
 $("html").mousemove(function (event) {
-	$("#heading2").offset({
+	$("").offset({
+		left: event.pageX,
+		top: event.pageY
+	});
+});
+
+/* УПРАЖНЕНИЯ */
+
+/*
+	#1. Следом за кликами
+		Измените последний пример с mousemove так, чтобы заголовок
+		следовал не за указателем мышки, а только за кликами: вы кли-
+		каете в любом месте страницы, и заголовок перемещается туда.
+*/
+$("html").click(function (event) {
+	$("#heading3").offset({
 		left: event.pageX,
 		top: event.pageY
 	});
