@@ -80,13 +80,18 @@ $("html").mousemove(function (event) {
 		или вверх), чтобы знать, увеличивать или уменьшать для заго-
 		ловка отступы слева (left) и сверху (top). Кроме того, при
 		достижении угла квадрата нужно будет менять направление.
+	#3. Остановка анимации по клику
+		Доработайте упражнение #2: добавьте к двигающемуся эле-
+		менту h1 обработчик клика, который останавливает анимацию.
+		Подсказка: отменить запуск кода по интервалу можно функцией
+		clearInterval.
 */
 
 var leftOffset = 0;
 var topOffset = 0;
 var right = "right";
 
-setInterval(function() {
+var animate = function () {
 	$("#test").offset({ 
 		left: leftOffset,                        
 		top: topOffset
@@ -113,5 +118,13 @@ setInterval(function() {
 		} else if(topOffset < 0) {
 			topOffset = 0;
 		}
-	} 
-}, 30)
+	}
+};
+
+animate();
+window.intervalId = setInterval(animate, 20);
+
+$("body").on("click", function () {
+	$("#test").stop(true, false);
+	clearInterval(window.intervalId)
+});
