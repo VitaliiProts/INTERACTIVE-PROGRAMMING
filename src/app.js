@@ -36,13 +36,13 @@ var moveHeading = function () {
 		leftOffset = 0;
 	}
 };
-
 // setInterval(moveHeading, 20);
+
 
 /* Реакция на действия пользователя */
 
 var clickHandler = function (event) {
- console.log("Клик! " + event.pageX + " " + event.pageY);
+	console.log("Клик! " + event.pageX + " " + event.pageY);
 };
 
 $("h1").click(clickHandler);
@@ -62,10 +62,56 @@ $("html").mousemove(function (event) {
 		Измените последний пример с mousemove так, чтобы заголовок
 		следовал не за указателем мышки, а только за кликами: вы кли-
 		каете в любом месте страницы, и заголовок перемещается туда.
+		*/
+		$("html").click(function (event) {
+			$("#heading3").offset({
+				left: event.pageX,
+				top: event.pageY
+			});
+		});
+
+/*
+	#2. Создайте собственную анимацию
+		Используйте setInterval для анимации заголовка h1, двигая
+		его по квадрату, вдоль краев страницы. Пусть он переместится
+		на 200 пикселей вправо, на 200 пикселей вниз, 200 пикселей
+		влево, 200 пикселей вверх, а затем начнет с начала. Подсказка:
+		нужно запоминать текущее направление (вправо, вниз, влево
+		или вверх), чтобы знать, увеличивать или уменьшать для заго-
+		ловка отступы слева (left) и сверху (top). Кроме того, при
+		достижении угла квадрата нужно будет менять направление.
 */
-$("html").click(function (event) {
-	$("#heading3").offset({
-		left: event.pageX,
-		top: event.pageY
+
+var leftOffset = 0;
+var topOffset = 0;
+var right = "right";
+
+setInterval(function() {
+	$("#test").offset({ 
+		left: leftOffset,                        
+		top: topOffset
 	});
-});
+
+	if(right == "right")    
+		leftOffset++;
+	else
+		leftOffset--;
+
+	if(leftOffset < 0 && topOffset > 0) {
+		leftOffset = 0;
+		topOffset--;
+	} else if(topOffset == 0) {
+		right = "right";
+	}
+	if (leftOffset > 200) {
+		leftOffset = 200;
+
+		topOffset++;
+		if (topOffset > 200) {
+			topOffset = 200;
+			right = "left";
+		} else if(topOffset < 0) {
+			topOffset = 0;
+		}
+	} 
+}, 30)
